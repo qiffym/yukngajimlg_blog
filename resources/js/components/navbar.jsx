@@ -44,8 +44,8 @@ export function Navbar() {
                             <DropdownMenu>
                                 <DropdownMenuTrigger className="text-muted-foreground transition duration-200 hover:text-foreground focus:outline-none">
                                     <Avatar className="size-8">
-                                        <AvatarImage src="https://github.com/irsyadadl.png" />
-                                        <AvatarFallback>I</AvatarFallback>
+                                        <AvatarImage src={auth.user.gravatar} />
+                                        <AvatarFallback>{auth.user.initials}</AvatarFallback>
                                     </Avatar>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56" align="end">
