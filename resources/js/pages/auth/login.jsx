@@ -27,6 +27,10 @@ export default function Login({ status, canResetPassword }) {
         post(route('login'));
     };
 
+    const onChange = (event) => {
+        setData(event.target.name, event.target.value);
+    };
+
     return (
         <>
             <Head title="Log in" />
@@ -41,7 +45,7 @@ export default function Login({ status, canResetPassword }) {
                             value={data.email}
                             autoComplete="username"
                             isFocused={true}
-                            onChange={(e) => setData('email', e.target.value)}
+                            onChange={onChange}
                         />
                         <InputErrorMessage message={errors.email} className="mt-2" />
                     </div>
@@ -53,7 +57,7 @@ export default function Login({ status, canResetPassword }) {
                             type="password" id="password" name="password"
                             value={data.password}
                             autoComplete="current-password"
-                            onChange={(e) => setData('password', e.target.value)}
+                            onChange={onChange}
                         />
                         <InputErrorMessage message={errors.password} className="mt-2" />
                     </div>
@@ -67,6 +71,7 @@ export default function Login({ status, canResetPassword }) {
                             />
                             <span className="ms-2 text-sm">Remember me</span>
                         </label>
+
                         {canResetPassword && (
                             <Link
                                 href={route('password.request')}
