@@ -35,7 +35,7 @@ export default function Register() {
             <Head title="Register" />
 
             <AuthenticatedCard title="Create a new account" description="Or log in to your existing account">
-                <form action={submit} className="space-y-6">
+                <form onSubmit={submit} className="space-y-6">
                     <div>
                         <Label htmlFor="name">Name</Label>
                         <Input className="mt-1"
