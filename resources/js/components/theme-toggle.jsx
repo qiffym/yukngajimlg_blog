@@ -1,6 +1,6 @@
 import { useTheme } from '@/components/theme-provider.jsx';
 import { Button } from '@/components/ui/button.jsx';
-import { IconMoon, IconMoonFill, IconSunFill } from '@irsyadadl/paranoid';
+import { IconMoonFill, IconSunFill } from '@irsyadadl/paranoid';
 
 export function ThemeToggle() {
     const { setTheme } = useTheme();
