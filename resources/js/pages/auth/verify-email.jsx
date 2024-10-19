@@ -30,10 +30,11 @@ export default function VerifyEmail({ status }) {
                     <Button type="submit" disabled={processing}>
                         Resend Verification Email
                     </Button>
-                    <Link as="button"
-                          href={'/logout'}
-                          method="post"
-                          className="text-sm text-muted-foreground underline hover:text-foreground"
+                    <Link
+                        as="button"
+                        href={'/logout'}
+                        method="post"
+                        className="text-sm text-muted-foreground underline hover:text-foreground"
                     >
                         Log Out
                     </Link>

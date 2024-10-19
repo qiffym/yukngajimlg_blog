@@ -12,7 +12,7 @@ export default function ResetPassword({ token, email }) {
         token: token,
         email: email,
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
     });
 
     useEffect(() => {
@@ -37,34 +37,43 @@ export default function ResetPassword({ token, email }) {
                 <form onSubmit={submit} className="space-y-6">
                     <div>
                         <Label htmlFor="email">Email</Label>
-                        <Input className="mt-1"
-                               type="email" id="email" name="email"
-                               value={data.email}
-                               onChange={onChange}
-                               autoComplete="username"
+                        <Input
+                            className="mt-1"
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={data.email}
+                            onChange={onChange}
+                            autoComplete="username"
                         />
                         <InputErrorMessage className="mt-2" message={errors.email} />
                     </div>
 
                     <div>
                         <Label htmlFor="password">Password</Label>
-                        <Input className="mt-1"
-                               type="password" id="password" name="password"
-                               value={data.password}
-                               onChange={onChange}
-                               autoComplete="new-password"
-                               autoFocus
+                        <Input
+                            className="mt-1"
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={data.password}
+                            onChange={onChange}
+                            autoComplete="new-password"
+                            autoFocus
                         />
                         <InputErrorMessage className="mt-2" message={errors.password} />
                     </div>
 
                     <div>
                         <Label htmlFor="password_confirmation">Password Confirmation</Label>
-                        <Input className="mt-1"
-                               type="password" id="password_confirmation" name="password_confirmation"
-                               value={data.password_confirmation}
-                               onChange={onChange}
-                               autoComplete="new-password"
+                        <Input
+                            className="mt-1"
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            onChange={onChange}
+                            autoComplete="new-password"
                         />
                         <InputErrorMessage className="mt-2" message={errors.password_confirmation} />
                     </div>

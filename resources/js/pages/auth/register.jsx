@@ -12,7 +12,7 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
     });
 
     useEffect(() => {
@@ -38,48 +38,60 @@ export default function Register() {
                 <form onSubmit={submit} className="space-y-6">
                     <div>
                         <Label htmlFor="name">Name</Label>
-                        <Input className="mt-1"
-                               type="text" id="name" name="name"
-                               value={data.name}
-                               onChange={onChange}
-                               autoComplete="name"
-                               autoFocus
-                               required
+                        <Input
+                            className="mt-1"
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            onChange={onChange}
+                            autoComplete="name"
+                            autoFocus
+                            required
                         />
                         <InputErrorMessage className="mt-2" message={errors.name} />
                     </div>
 
                     <div>
                         <Label htmlFor="email">Email</Label>
-                        <Input className="mt-1"
-                               type="email" id="email" name="email"
-                               value={data.email}
-                               onChange={onChange}
-                               autoComplete="username"
-                               required
+                        <Input
+                            className="mt-1"
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={data.email}
+                            onChange={onChange}
+                            autoComplete="username"
+                            required
                         />
                         <InputErrorMessage className="mt-2" message={errors.email} />
                     </div>
 
                     <div>
                         <Label htmlFor="password">Password</Label>
-                        <Input className="mt-1"
-                               type="password" id="password" name="password"
-                               value={data.password}
-                               onChange={onChange}
-                               autoComplete="new-password"
-                               required
+                        <Input
+                            className="mt-1"
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={data.password}
+                            onChange={onChange}
+                            autoComplete="new-password"
+                            required
                         />
                         <InputErrorMessage className="mt-2" message={errors.password} />
                     </div>
 
                     <div>
                         <Label htmlFor="password_confirmation">Password Confirmation</Label>
-                        <Input className="mt-1"
-                               type="password" id="password_confirmation" name="password_confirmation"
-                               value={data.password_confirmation}
-                               onChange={onChange}
-                               required
+                        <Input
+                            className="mt-1"
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            value={data.password_confirmation}
+                            onChange={onChange}
+                            required
                         />
                         <InputErrorMessage className="mt-2" message={errors.password_confirmation} />
                     </div>

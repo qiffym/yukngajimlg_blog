@@ -8,7 +8,7 @@ import { InputErrorMessage } from '@/components/input-error-message';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
-        email: ''
+        email: '',
     });
 
     const submit = (e) => {
@@ -20,7 +20,7 @@ export default function ForgotPassword({ status }) {
         <>
             <Head title="Forgot Password" />
 
-            {status && <div className="mb-4 text-sm text-green-600 font-medium">{status}</div>}
+            {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
 
             <AuthenticatedCard
                 title="Forgot Password"
@@ -30,10 +30,13 @@ export default function ForgotPassword({ status }) {
                 <form onSubmit={submit}>
                     <div>
                         <Label htmlFor="email">Email</Label>
-                        <Input type="email" id="email" name="email"
-                               value={data.email}
-                               onChange={(e) => setData('email', e.target.value)}
-                               autoFocus
+                        <Input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={data.email}
+                            onChange={(e) => setData('email', e.target.value)}
+                            autoFocus
                         />
                         <InputErrorMessage className="mt-2" message={errors.email} />
                     </div>

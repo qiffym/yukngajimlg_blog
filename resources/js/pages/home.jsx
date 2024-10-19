@@ -1,6 +1,6 @@
-import { AppLayout } from "@/layouts/app-layout";
-import { Container } from "@/components/container";
-import { Head } from "@inertiajs/react";
+import { AppLayout } from '@/layouts/app-layout';
+import { Container } from '@/components/container';
+import { Head } from '@inertiajs/react';
 
 export default function Home() {
     return (

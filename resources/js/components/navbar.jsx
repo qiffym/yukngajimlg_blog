@@ -1,16 +1,18 @@
-import { Link, usePage } from "@inertiajs/react";
-import { cn } from "@/lib/utils";
-import { Logo } from "@/components/logo";
+import { Link, usePage } from '@inertiajs/react';
+import { cn } from '@/lib/utils';
+import { Logo } from '@/components/logo';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Container } from "@/components/container";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IconChevronDown } from "@irsyadadl/paranoid";
+} from '@/components/ui/dropdown-menu';
+import { Container } from '@/components/container';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { IconChevronDown } from '@irsyadadl/paranoid';
+import { ThemeToggle } from '@/components/theme-toggle.jsx';
+import { Button } from '@/components/ui/button.jsx';
 
 export function Navbar() {
     const { auth } = usePage().props;
@@ -25,8 +27,8 @@ export function Navbar() {
                         <DropdownMenu>
                             <DropdownMenuTrigger
                                 className={cn(
-                                    "group flex items-center p-4 text-sm text-muted-foreground transition duration-200 hover:text-foreground focus:outline-none",
-                                    "data-[state=open]:text-foreground",
+                                    'group flex items-center p-4 text-sm text-muted-foreground transition duration-200 hover:text-foreground focus:outline-none',
+                                    'data-[state=open]:text-foreground',
                                 )}
                             >
                                 Categories
@@ -40,6 +42,7 @@ export function Navbar() {
                         </DropdownMenu>
                     </div>
                     <div className="flex items-center gap-x-4">
+                        <ThemeToggle />
                         {auth.user ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger className="text-muted-foreground transition duration-200 hover:text-foreground focus:outline-none">
@@ -61,7 +64,9 @@ export function Navbar() {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         ) : (
-                            <NavLink href="/login">Login</NavLink>
+                            <Button asChild variant="outline">
+                                <Link href="/login">Login</Link>
+                            </Button>
                         )}
                     </div>
                 </div>
@@ -70,11 +75,10 @@ export function Navbar() {
     );
 }
 
-
 export function NavLink({ className, ...props }) {
     return (
         <Link
-            className={cn("p-4 text-sm text-muted-foreground transition duration-200 hover:text-foreground", className)}
+            className={cn('p-4 text-sm text-muted-foreground transition duration-200 hover:text-foreground', className)}
             {...props}
         />
     );

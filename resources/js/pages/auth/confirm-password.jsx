@@ -8,7 +8,7 @@ import { InputErrorMessage } from '@/components/input-error-message';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        password: ''
+        password: '',
     });
 
     useEffect(() => {
@@ -33,11 +33,14 @@ export default function ConfirmPassword() {
             <form onSubmit={submit}>
                 <div className="mt-4">
                     <Label htmlFor="password">Password</Label>
-                    <Input className="mt-1 block w-full"
-                           type="password" id="password" name="password"
-                           value={data.password}
-                           onChange={(e) => setData('password', e.target.value)}
-                           autoFocus
+                    <Input
+                        className="mt-1 block w-full"
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={data.password}
+                        onChange={(e) => setData('password', e.target.value)}
+                        autoFocus
                     />
                     <InputErrorMessage className="mt-2" message={errors.password} />
                 </div>

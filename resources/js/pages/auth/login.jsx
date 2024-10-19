@@ -8,12 +8,11 @@ import { Input } from '@/components/ui/input';
 import { InputErrorMessage } from '@/components/input-error-message';
 import { AuthenticatedCard } from '@/components/authenticated-card';
 
-
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: false
+        remember: false,
     });
 
     useEffect(() => {
@@ -34,14 +33,16 @@ export default function Login({ status, canResetPassword }) {
     return (
         <>
             <Head title="Log in" />
-            {status && <div className="mb-4 text-sm text-green-600 font-medium">{status}</div>}
+            {status && <div className="mb-4 text-sm font-medium text-green-600">{status}</div>}
             <AuthenticatedCard title="Log in to your account" description="Or create a new account">
                 <form onSubmit={submit} className="space-y-6">
                     <div>
                         <Label htmlFor="email">Email</Label>
                         <Input
                             className="mt-1"
-                            type="email" id="email" name="email"
+                            type="email"
+                            id="email"
+                            name="email"
                             value={data.email}
                             autoComplete="username"
                             isFocused={true}
@@ -54,7 +55,9 @@ export default function Login({ status, canResetPassword }) {
                         <Label htmlFor="password">Password</Label>
                         <Input
                             className="mt-1"
-                            type="password" id="password" name="password"
+                            type="password"
+                            id="password"
+                            name="password"
                             value={data.password}
                             autoComplete="current-password"
                             onChange={onChange}
