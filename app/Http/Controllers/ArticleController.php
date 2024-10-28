@@ -2,17 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ArticleStatus;
+use App\Http\Resources;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class ArticleController extends Controller
+class ArticleController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(
+                middleware: ['auth'],
+                except: ['index', 'show']
+            )
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $articles = Resources\ArticleBlockResource::collection(
+            $self = Article::query()
+                ->select(['id', 'category_id', 'user_id', 'title', 'slug', 'thumbnail', 'teaser', 'published_at'])
+                ->with([
+                    'category:id,name',
+                    'user:id,name',
+                ])
+                ->where('status', ArticleStatus::Published)
+                ->latest('published_at')
+                ->paginate(9)
+        )->additional(['meta' => ['has_pages' => $self->hasPages()]]);
+
+        return inertia('articles/index', [
+            'articles' => fn() => $articles
+        ]);
     }
 
     /**
@@ -62,4 +90,5 @@ class ArticleController extends Controller
     {
         //
     }
+
 }
