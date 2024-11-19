@@ -64,7 +64,20 @@ class ArticleController extends Controller implements HasMiddleware
      */
     public function show(Article $article)
     {
-        //
+        $relatedArticles = Article::query()->select(['id', 'title', 'slug', 'teaser', 'user_id'])
+            ->where('category_id', $article->category_id)
+            ->with('user:id,name')
+            ->where('id', '!=', $article->id)
+            ->latest('published_at')
+            ->limit(4)
+            ->get();
+
+        return inertia('articles/show', [
+            'article' => fn() => new Resources\ArticleSingleResource(
+                $article->load(['category:id,name,slug', 'user:id,name', 'tags:id,name,slug']),
+            ),
+            'articles' => fn() => $relatedArticles
+        ]);
     }
 
     /**
