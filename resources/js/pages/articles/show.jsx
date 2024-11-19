@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { RelatedArticles } from '@/pages/articles/partials/related-articles';
 import { Author } from '@/pages/articles/partials/author';
 import { TableOfContents } from '@/pages/articles/partials/table-of-contents';
+import { Prose } from '@/components/prose.jsx';
 
 export default function Show(props) {
     const { article } = props;
@@ -43,10 +44,7 @@ export default function Show(props) {
 
                         <p className="text-muted-foreground">{article.teaser}</p>
 
-                        <div
-                            className="prose prose-zinc max-w-3xl dark:prose-invert"
-                            dangerouslySetInnerHTML={{ __html: article.content }}
-                        />
+                        <Prose content={article.content} />
 
                         {article.tags.length > 0 ? (
                             <div className="flex items-center gap-x-2">

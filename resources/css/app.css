@@ -1,3 +1,5 @@
+@import "markdown.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -62,5 +64,16 @@
     }
     body {
         @apply bg-background text-foreground;
+    }
+}
+
+@layer components {
+    .hide-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .hide-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 }
