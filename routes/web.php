@@ -11,7 +11,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
+Route::get('articles/tags/{tag:slug}', [Controllers\TagController::class, 'show'])->name('tags.show');
+Route::get('articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
 
 Route::resource('articles', Controllers\ArticleController::class)
     ->scoped(['article' => 'slug'])
