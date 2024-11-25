@@ -2,7 +2,7 @@
 
 namespace App\Markdown\Youtube;
 
-final class YouTubeUrl implements YoutubeUrlInterface
+final class YouTubeUrl implements YouTubeUrlInterface
 {
     private string $videoId;
     private ?string $startTimestamp;
