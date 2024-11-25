@@ -11,9 +11,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [Controllers\ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
+
 Route::resource('articles', Controllers\ArticleController::class)
     ->scoped(['article' => 'slug'])
     ->only(['index', 'show']);
 
 require __DIR__ . '/auth.php';
-

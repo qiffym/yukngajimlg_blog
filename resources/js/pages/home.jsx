@@ -6,8 +6,6 @@ import { ArticleCard } from './articles/partials/article-card';
 
 export default function Home(props) {
     const { articles, popular_articles } = props;
-    console.log('🚀 ~ Home ~ popular_articles:', popular_articles);
-    console.log('🚀 ~ Home ~ articles:', articles);
 
     return (
         <div>

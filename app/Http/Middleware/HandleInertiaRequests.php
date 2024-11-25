@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Resources\AuthenticatedUserResource;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -36,7 +37,13 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user() ? new AuthenticatedUserResource($request->user()) : null,
             ],
-            'ziggy' => fn () => [
+            'categories_g' => fn() => Category::query()
+                ->select(['id', 'name', 'slug'])
+                ->orderBy('name')
+                ->whereHas('articles')
+                ->take(10)
+                ->get(),
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
