@@ -26,6 +26,11 @@ export default function Home(props) {
                         ) : (
                             <p>No articles found.</p>
                         )}
+                        {/* <div className="mt-12 text-right">
+                            <Link className="text-sky-500 hover:underline" href={route('articles.index', ['week'])}>
+                                See more popular articles
+                            </Link>
+                        </div> */}
                     </section>
 
                     <section id="latest">

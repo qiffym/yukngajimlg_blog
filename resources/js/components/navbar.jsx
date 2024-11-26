@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { IconChevronDown } from '@irsyadadl/paranoid';
 import { ThemeToggle } from '@/components/theme-toggle.jsx';
 import { Button } from '@/components/ui/button.jsx';
+import { Filter } from './filter';
 
 export function Navbar() {
     const { auth, categories_g } = usePage().props;
@@ -24,6 +25,7 @@ export function Navbar() {
                         <Logo />
                         <NavLink href="/">Home</NavLink>
                         <NavLink href="/articles">Articles</NavLink>
+                        <Filter />
                         <DropdownMenu>
                             <DropdownMenuTrigger
                                 className={cn(

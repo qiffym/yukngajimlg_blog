@@ -14,8 +14,11 @@ Route::middleware('auth')->group(function () {
 Route::get('articles/tags/{tag:slug}', [Controllers\TagController::class, 'show'])->name('tags.show');
 Route::get('articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
 
-Route::resource('articles', Controllers\ArticleController::class)
-    ->scoped(['article' => 'slug'])
-    ->only(['index', 'show']);
+Route::get('articles/{article:slug}', [Controllers\ArticleController::class, 'show'])
+    ->name('articles.show')
+    ->where('article', '^(?!latest|trending|most-likes|year|month|week|all-time)[a-z0-9-]+$');
+
+Route::get('articles/{key?}', [Controllers\ArticleController::class, 'index'])
+    ->name('articles.index');
 
 require __DIR__ . '/auth.php';
