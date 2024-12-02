@@ -22,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         \Illuminate\Http\Resources\Json\JsonResource::withoutWrapping();
+        \Illuminate\Database\Eloquent\Model::unguard();
     }
 }

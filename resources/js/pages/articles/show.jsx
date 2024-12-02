@@ -8,9 +8,19 @@ import { RelatedArticles } from '@/pages/articles/partials/related-articles';
 import { Author } from '@/pages/articles/partials/author';
 import { TableOfContents } from '@/pages/articles/partials/table-of-contents';
 import { Prose } from '@/components/prose.jsx';
+import { useState } from 'react';
+import { CommentBlock } from './comments/comment-block';
 
 export default function Show(props) {
-    const { article } = props;
+    const { article, comments, auth } = props;
+    const [open, setOpen] = useState(false);
+    const [attributes, setAttributes] = useState({
+        body: '',
+        url: '',
+        method: 'post',
+        submitText: 'Comment',
+    });
+
     return (
         <>
             <Head title={article.title} />
@@ -55,6 +65,8 @@ export default function Show(props) {
                                 ))}
                             </div>
                         ) : null}
+
+                        <CommentBlock comments={comments} />
                     </div>
                 </div>
             </Container>
