@@ -13,7 +13,6 @@ export function CommentForm(props) {
     });
 
     function cancel() {
-        reset();
         props.setOpen(false);
     }
 

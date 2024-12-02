@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
 use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -43,6 +44,17 @@ class CommentController extends Controller implements HasMiddleware
             'author_id' => $request->user()->id,
             'article_id' => $comment->article_id
         ]);
+
+        return back();
+    }
+
+    public function update(Request $request, Article $article, Comment $comment)
+    {
+        $validatedData = $request->validate([
+            'body' => ['required', 'string', 'min:3']
+        ]);
+
+        $comment->update($validatedData);
 
         return back();
     }

@@ -4,6 +4,7 @@ import { usePage } from '@inertiajs/react';
 import { IconHeart, IconMessage } from '@irsyadadl/paranoid';
 import { useState } from 'react';
 import { CommentForm } from './comment-form';
+import { CommentOptions } from './comment-options';
 
 export function CommentBlock({ comments }) {
     const { auth, article } = usePage().props;
@@ -36,6 +37,8 @@ export function CommentBlock({ comments }) {
                     </Avatar>
 
                     <div className="relative w-full">
+                        {auth.user && <CommentOptions comment={comment} article={article} />}
+
                         <h4 className="text-sm font-semibold">{comment.user.name}</h4>
                         <div className="prose prose-gray text-muted-foreground dark:prose-invert">{comment.body}</div>
 
