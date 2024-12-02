@@ -2,9 +2,30 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { usePage } from '@inertiajs/react';
 import { IconHeart, IconMessage } from '@irsyadadl/paranoid';
+import { useState } from 'react';
+import { CommentForm } from './comment-form';
 
 export function CommentBlock({ comments }) {
     const { auth, article } = usePage().props;
+    const [open, setOpen] = useState(false);
+    const [attributes, SetAttributes] = useState({
+        body: '',
+        url: '',
+        method: '',
+        item: {},
+        submitText: 'Reply',
+    });
+
+    const reply = (comment) => {
+        setOpen(true);
+        SetAttributes({
+            ...attributes,
+            body: null,
+            url: route('comments.reply', [comment]),
+            item: comment,
+            submitText: 'Reply',
+        });
+    };
 
     return (
         <div className="space-y-6">
@@ -20,7 +41,7 @@ export function CommentBlock({ comments }) {
 
                         <div className="flex items-center gap-x-2 [&_button]:size-7 [&_button]:rounded-full [&_svg]:size-4">
                             {comment.can_be_replied && (
-                                <Button size="icon" variant="ghost">
+                                <Button size="icon" variant="ghost" onClick={() => reply(comment)}>
                                     <IconMessage />
                                 </Button>
                             )}
@@ -37,6 +58,8 @@ export function CommentBlock({ comments }) {
                     </div>
                 </div>
             ))}
+
+            {auth.user && <CommentForm auth={auth} open={open} setOpen={setOpen} attributes={attributes} />}
         </div>
     );
 }
