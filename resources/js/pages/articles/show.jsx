@@ -10,6 +10,8 @@ import { TableOfContents } from '@/pages/articles/partials/table-of-contents';
 import { Prose } from '@/components/prose.jsx';
 import { useState } from 'react';
 import { CommentBlock } from './comments/comment-block';
+import { Button } from '@/components/ui/button';
+import { CommentForm } from './comments/comment-form';
 
 export default function Show(props) {
     const { article, comments, auth } = props;
@@ -66,6 +68,29 @@ export default function Show(props) {
                             </div>
                         ) : null}
 
+                        <div className="mb-6">
+                            {auth.user ? (
+                                <>
+                                    <CommentForm {...{ attributes, auth, open, setOpen }} />
+                                    <Button
+                                        onClick={() => {
+                                            setOpen(true);
+                                            setAttributes({
+                                                body: '',
+                                                url: route('comments.store', [article]),
+                                                submitText: 'Comment',
+                                            });
+                                        }}
+                                    >
+                                        Add Comment
+                                    </Button>
+                                </>
+                            ) : (
+                                <Button asChild>
+                                    <Link href="/login">Login to Comment</Link>
+                                </Button>
+                            )}
+                        </div>
                         <CommentBlock comments={comments} />
                     </div>
                 </div>

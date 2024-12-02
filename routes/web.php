@@ -21,4 +21,5 @@ Route::get('articles/{article:slug}', [Controllers\ArticleController::class, 'sh
 Route::get('articles/{key?}', [Controllers\ArticleController::class, 'index'])
     ->name('articles.index');
 
+Route::post('comments/{article}', [Controllers\CommentController::class, 'store'])->name('comments.store');
 require __DIR__ . '/auth.php';
