@@ -16,6 +16,11 @@ class Article extends Model implements CanVisit
     use HasFactory;
     use HasVisits;
 
+    public function scopeTrending($query)
+    {
+        return $query->withCount('comments')->orderBy('comments_count', 'desc');
+    }
+
     protected function casts(): array
     {
         return [
