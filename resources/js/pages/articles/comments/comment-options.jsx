@@ -9,9 +9,10 @@ import {
 import { IconDotsVertical, IconHighlight, IconTrash, IconTriangleInfoFill } from '@irsyadadl/paranoid';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
 import { CommentForm } from '@/pages/articles/comments/comment-form';
 import { useState } from 'react';
+import { AlertAction } from '@/components/alert-action';
 
 export function CommentOptions({ comment, article }) {
     const { auth } = usePage().props;
@@ -36,8 +37,12 @@ export function CommentOptions({ comment, article }) {
         });
     };
 
-    const handleDelete = (e) => {
-        e.preventDefault();
+    const handleDelete = (article, comment) => {
+        router.delete(route('comments.destroy', [article, comment]), { preserveScroll: true });
+    };
+
+    const handleReport = (comment) => {
+        router.put(route('comments.report', [comment]), {}, { preserveScroll: true });
     };
 
     return (
@@ -54,10 +59,17 @@ export function CommentOptions({ comment, article }) {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-40">
                         {comment.user.id !== auth.user.id && (
-                            <DropdownMenuItem>
-                                <IconTriangleInfoFill className="mr-2 size-4" />
-                                Report
-                            </DropdownMenuItem>
+                            <AlertAction
+                                trigger={
+                                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                        <IconTriangleInfoFill className="mr-2 size-4" />
+                                        Report
+                                    </DropdownMenuItem>
+                                }
+                                action={() => handleReport(comment)}
+                                title="Report Comment"
+                                description="Are you sure you want to report this comment?"
+                            />
                         )}
                         {comment.user.id === auth.user.id && (
                             <DropdownMenuGroup>
@@ -66,10 +78,17 @@ export function CommentOptions({ comment, article }) {
                                     Edit
                                 </DropdownMenuItem>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem onSelect={handleDelete}>
-                                    <IconTrash className="mr-2 size-4" />
-                                    Delete
-                                </DropdownMenuItem>
+                                <AlertAction
+                                    trigger={
+                                        <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                                            <IconTrash className="mr-2 size-4" />
+                                            Delete
+                                        </DropdownMenuItem>
+                                    }
+                                    action={() => handleDelete(article, comment)}
+                                    title="Delete Comment"
+                                    description="Are you sure you want to delete this comment?"
+                                />
                             </DropdownMenuGroup>
                         )}
                     </DropdownMenuContent>

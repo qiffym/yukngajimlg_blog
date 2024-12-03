@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentRequest;
 use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Http\Request;
@@ -56,6 +55,36 @@ class CommentController extends Controller implements HasMiddleware
 
         $comment->update($validatedData);
 
+        return back();
+    }
+
+    public function destroy(Article $article, Comment $comment)
+    {
+        $comment->delete();
+        return back();
+    }
+
+    public function report(Comment $comment)
+    {
+        if (!session()->has('reported_spams')) {
+            session(['reported_spams' => []]);
+        }
+
+        $commentId = $comment->id;
+        $reporterId = session()->getId();
+
+        if (!session()->has("reported_spams.$commentId")) {
+            session()->put("reported_spams.$commentId", []);
+        }
+
+        if (!in_array($reporterId, session("reported_spams.$commentId"))) {
+            $comment->increment('spam_reports');
+            session()->push("reported_spams.$commentId", $reporterId);
+
+            if ($comment->spam_reports > 10) {
+                $comment->delete();
+            }
+        }
         return back();
     }
 }
