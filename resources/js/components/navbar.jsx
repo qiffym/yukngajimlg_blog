@@ -5,12 +5,14 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Label } from '@/components/ui/label';
 import { Container } from '@/components/container';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { IconChevronDown } from '@irsyadadl/paranoid';
+import { IconChevronDown, IconSettings } from '@irsyadadl/paranoid';
 import { ThemeToggle } from '@/components/theme-toggle.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { Filter } from './filter';
@@ -50,14 +52,28 @@ export function Navbar() {
                         {auth.user ? (
                             <DropdownMenu>
                                 <DropdownMenuTrigger className="text-muted-foreground transition duration-200 hover:text-foreground focus:outline-none">
-                                    <Avatar className="size-8">
+                                    <Avatar className="size-6 sm:size-8">
                                         <AvatarImage src={auth.user.gravatar} />
                                         <AvatarFallback>{auth.user.initials}</AvatarFallback>
                                     </Avatar>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56" align="end">
+                                    <DropdownMenuLabel className="space-y-0.5">
+                                        <Label>{auth.user.name}</Label>
+                                        <span className="block text-sm text-muted-foreground">{auth.user.email}</span>
+                                    </DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
                                     <DropdownMenuItem asChild>
                                         <Link href="/dashboard">Dashboard</Link>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem asChild>
+                                        <Link
+                                            href={route('profile.edit')}
+                                            className="flex items-center justify-between [&_svg]:size-4 [&_svg]:text-muted-foreground"
+                                        >
+                                            Settings
+                                            <IconSettings />
+                                        </Link>
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem asChild className="w-full">
