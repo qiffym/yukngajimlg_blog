@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button.jsx';
 import { Filter } from './filter';
 import { CommandPalette } from './command-palette';
 import { useState } from 'react';
+import { ResponsiveNavbar } from './responsive-navbar';
 
 export function Navbar() {
     const { auth, categories_g } = usePage().props;
@@ -25,7 +26,8 @@ export function Navbar() {
     return (
         <>
             <CommandPalette open={open} setOpen={setOpen} />
-            <nav className="border-b bg-secondary/50 py-1">
+
+            <nav className="hidden border-b bg-secondary/50 py-1 lg:block">
                 <Container>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-x-2">
@@ -109,6 +111,8 @@ export function Navbar() {
                     </div>
                 </Container>
             </nav>
+
+            <ResponsiveNavbar open={open} setOpen={setOpen} />
         </>
     );
 }
