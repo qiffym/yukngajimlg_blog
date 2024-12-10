@@ -16,14 +16,11 @@ class ArticleController extends Controller implements HasMiddleware
         return [
             new Middleware(
                 middleware: ['auth'],
-                except: ['index', 'show']
+                except: ['index', 'show', 'search']
             )
         ];
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index($key = 'latest')
     {
         $articles = Article::query()->select(['id', 'category_id', 'user_id', 'title', 'slug', 'thumbnail', 'teaser', 'status', 'published_at'])
@@ -57,9 +54,25 @@ class ArticleController extends Controller implements HasMiddleware
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function search(Request $request)
+    {
+        if (!$request->has('search')) {
+            return [];
+        }
+
+        return Article::query()
+            ->select(['id', 'title', 'slug'])
+            ->where('title', 'like', "%{$request->search}%")
+            ->whereStatus(ArticleStatus::Published)
+            ->limit(20)
+            ->get()
+            ->map(fn($article) => [
+                'id' => $article->id,
+                'title' => $article->title,
+                'href' => route('articles.show', $article->slug),
+            ]);
+    }
+
     public function create()
     {
         //
