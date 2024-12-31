@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use App\Enums\ArticleStatus;
+use App\Observers\ArticleObserver;
 use Coderflex\Laravisit\Concerns\CanVisit;
 use Coderflex\Laravisit\Concerns\HasVisits;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
+#[ObservedBy([ArticleObserver::class])]
 class Article extends Model implements CanVisit
 {
     use HasFactory;

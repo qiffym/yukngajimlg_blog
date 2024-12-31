@@ -15,6 +15,7 @@ class RoleSeeder extends Seeder
             'name' => 'Qiff Ya Muhammad',
             'email' => 'qiffym@admin.com',
             'password' => bcrypt('123'),
+            'email_verified_at' => now(),
         ])->assignRole(Role::create([
             'name' => 'admin',
             'guard_name' => 'web'
