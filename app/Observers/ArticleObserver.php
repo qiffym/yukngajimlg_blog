@@ -11,4 +11,9 @@ class ArticleObserver
         $article->user_id = auth()->id();
         $article->slug = str($article->title)->slug();
     }
+
+    public function deleting(Article $article): void
+    {
+        $article->comments()->delete();
+    }
 }

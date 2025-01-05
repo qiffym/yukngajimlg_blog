@@ -12,7 +12,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { FileUpload } from '@/components/file-upload';
 
 export default function Form({ auth, page_meta, page_data }) {
-    console.log(page_data);
     const { data, setData, post, errors, processing } = useForm({
         thumbnail: null,
         category_id: page_data.article?.category_id ?? '',
@@ -22,6 +21,7 @@ export default function Form({ auth, page_meta, page_data }) {
         content: page_data.article?.content ?? '',
         published_at: page_data.article?.published_at ?? '',
         status: page_data.article?.status ?? '',
+        _method: page_meta.method,
     });
 
     const [selected, setSelected] = useState(
@@ -35,7 +35,9 @@ export default function Form({ auth, page_meta, page_data }) {
 
     function submit(e) {
         e.preventDefault();
-        post(page_meta.url);
+        post(page_meta.url, {
+            preserveScroll: true
+        });
     }
 
     function onChange(e) {

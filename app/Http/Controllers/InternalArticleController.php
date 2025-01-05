@@ -84,4 +84,55 @@ class InternalArticleController extends Controller implements HasMiddleware
 
         return redirect()->route('internal-articles.index');
     }
+
+    public function edit(Models\Article $article)
+    {
+        return inertia('articles/form', [
+            'page_data' => fn () => [
+                'categories' => fn () => Models\Category::toSelectArray(),
+                'tags' => fn () => Models\Tag::toSelectArray(),
+                'article' => fn () => $article->load('tags', 'category:id,name'),
+                'statuses' => fn () => ArticleStatus::toSelectArray(),
+            ],
+            'page_meta' => [
+                'title' => 'Edit Article',
+                'description' => "Edit the article titled '{$article->title}'.",
+                'url' => route('internal-articles.update', $article),
+                'method' => 'PUT',
+            ],
+        ]);
+    }
+
+    public function update(ArticleRequest $request, Models\Article $article)
+    {
+        $validatedData = $request->validated();
+        unset($validatedData['tags']);
+
+        $article->update([
+            ...$validatedData,
+            'status' => $request->enum('status', ArticleStatus::class),
+            'thumbnail' => $request->file('thumbnail') ? $request->file('thumbnail')->store('thumbnails', 'public') : '',
+            'published_at' => $request->enum('status', ArticleStatus::class) === ArticleStatus::Published ? now() : null,
+        ]);
+
+        $article->tags()->sync($request->tags);
+
+        return redirect()->route('internal-articles.index');
+    }
+
+    public function destroy(Models\Article $article)
+    {
+        $article->delete();
+        return redirect()->route('internal-articles.index');
+    }
+
+    public function approve(Models\Article $article)
+    {
+        $article->update([
+            'status' => $article->status === ArticleStatus::Published ? ArticleStatus::Pending : ArticleStatus::Published,
+            'published_at' => $article->status === ArticleStatus::Published ? null : now(),
+        ]);
+
+        return redirect()->route('internal-articles.index');
+    }
 }

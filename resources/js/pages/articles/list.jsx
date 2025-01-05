@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { UserLayout } from '@/layouts/user-layout';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 import {
     IconChevronLeft,
     IconChevronRight,
@@ -22,6 +22,7 @@ import {
     IconDotsVertical,
     IconOpenLink,
 } from '@irsyadadl/paranoid';
+import { AlertAction } from '@/components/alert-action.jsx';
 
 export default function List({ auth, ...props }) {
     const { data: articles, meta, links } = props.articles;
@@ -112,12 +113,51 @@ export default function List({ auth, ...props }) {
                                                 <DropdownMenuContent align="end" className="w-48">
                                                     <DropdownMenuLabel>Article ID: {article.id}</DropdownMenuLabel>
                                                     <DropdownMenuSeparator />
-                                                    <DropdownMenuItem>Edit</DropdownMenuItem>
+                                                    <DropdownMenuItem asChild>
+                                                        <Link href={route('internal-articles.edit', [article])}>
+                                                            Edit
+                                                        </Link>
+                                                    </DropdownMenuItem>
                                                     {auth.user.is_admin && (
                                                         <DropdownMenuGroup>
-                                                            <DropdownMenuItem>Published</DropdownMenuItem>
+                                                            <AlertAction
+                                                                trigger={
+                                                                    <DropdownMenuItem
+                                                                        onSelect={(e) => e.preventDefault()}
+                                                                    >
+                                                                        {article.status !== 'published'
+                                                                            ? 'Publish'
+                                                                            : 'Unpublished'}
+                                                                    </DropdownMenuItem>
+                                                                }
+                                                                title="Publish Article"
+                                                                description="Are you sure want to publish this article?"
+                                                                action={() =>
+                                                                    router.put(
+                                                                        route('internal-articles.approve', [article]),
+                                                                        {},
+                                                                        { preserveScroll: true },
+                                                                    )
+                                                                }
+                                                            />
                                                             <DropdownMenuSeparator />
-                                                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                                                            <AlertAction
+                                                                trigger={
+                                                                    <DropdownMenuItem
+                                                                        onSelect={(e) => e.preventDefault()}
+                                                                    >
+                                                                        Delete
+                                                                    </DropdownMenuItem>
+                                                                }
+                                                                title="Delete Article"
+                                                                description="Are you sure want to delete this article?"
+                                                                action={() =>
+                                                                    router.delete(
+                                                                        route('internal-articles.destroy', [article]),
+                                                                        { preserveScroll: true },
+                                                                    )
+                                                                }
+                                                            />
                                                         </DropdownMenuGroup>
                                                     )}
                                                 </DropdownMenuContent>

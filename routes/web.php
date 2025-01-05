@@ -10,6 +10,7 @@ Route::get('/dashboard', Controllers\DashboardController::class)->middleware(['a
 Route::get('articles/tags/{tag:slug}', [Controllers\TagController::class, 'show'])->name('tags.show');
 Route::get('articles/categories/{category:slug}', [Controllers\CategoryController::class, 'show'])->name('categories.show');
 
+Route::put('internal-articles/approve/{article}', [Controllers\InternalArticleController::class, 'approve'])->name('internal-articles.approve');
 Route::resource('internal-articles', Controllers\InternalArticleController::class)
     ->parameter('internal-articles', 'article')
     ->except('show');
