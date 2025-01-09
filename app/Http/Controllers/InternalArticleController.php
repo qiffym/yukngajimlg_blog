@@ -30,10 +30,13 @@ class InternalArticleController extends Controller implements HasMiddleware
         $articles = ArticleListResource::collection(
             $self = Models\Article::query()->select(['id', 'user_id', 'category_id', 'title', 'slug', 'published_at', 'created_at', 'status'])
                 ->with(['user:id,name', 'category:id,name,slug', 'tags:id,name,slug'])
+                ->when($request->search, fn ($query, $value) => $query->where('title', 'like' , "%{$value}%"))
+                ->when($request->status, fn ($query, $value) => $query->where('status', $value))
                 ->withTotalVisitCount()
                 ->when(!$request->user()->hasRole('admin'), fn($query) => $query->whereBelongsTo($request->user()))
                 ->latest()
                 ->paginate(10)
+                ->withQueryString()
         )->additional([
             'meta' => [
                 'has_pages' => $self->hasPages(),
@@ -46,7 +49,8 @@ class InternalArticleController extends Controller implements HasMiddleware
         ]);
 
         return inertia('articles/list', [
-            'articles' => $articles
+            'articles' => fn() => $articles,
+            'state' => $request->only('page', 'status', 'search'),
         ]);
     }
 

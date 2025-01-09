@@ -23,9 +23,19 @@ import {
     IconOpenLink,
 } from '@irsyadadl/paranoid';
 import { AlertAction } from '@/components/alert-action.jsx';
+import { useState } from 'react';
+import { useFilter } from '@/hooks/use-filter.js';
 
 export default function List({ auth, ...props }) {
     const { data: articles, meta, links } = props.articles;
+    const [params, setParams] = useState(props.state);
+
+    useFilter({
+        route: route('internal-articles.index'),
+        values: params,
+        only: ['articles'],
+    });
+
     return (
         <div>
             <div className="mb-6 grid gap-6 sm:grid-cols-3">
@@ -49,29 +59,35 @@ export default function List({ auth, ...props }) {
                 </Card>
             </div>
             <Card>
-                <div className="flex items-center justify-between p-6">
+                <div className="flex flex-col justify-between gap-y-6 p-6 md:flex-row md:items-center md:gap-y-0">
                     <CardHeader className="p-0">
                         <CardTitle>Articles List</CardTitle>
                         <CardDescription>{meta.total} articles found on this application.</CardDescription>
                     </CardHeader>
-                    <div className="flex max-w-md gap-2">
-                        <Input placeholder="Search..." />
-                        <Select>
-                            <SelectTrigger className="w-40">
-                                <SelectValue placeholder="Published" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="draft">Draft</SelectItem>
-                                <SelectItem value="pending">Pending</SelectItem>
-                                <SelectItem value="publihsed">Published</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <Button asChild>
-                            <Link href={route('internal-articles.create')}>
-                                <IconCirclePlusFill className="mr-2 size-4" />
-                                New
-                            </Link>
-                        </Button>
+                    <div className="flex max-w-md flex-col gap-2 md:flex-row">
+                        <Input
+                            value={params?.search}
+                            onChange={(e) => setParams((prev) => ({ ...prev, search: e.target.value }))}
+                            placeholder="Search..."
+                        />
+                        <div className="grid grid-cols-2 gap-x-2 md:flex">
+                            <Select value={params?.status} onValueChange={(e) => setParams({ ...params, status: e })}>
+                                <SelectTrigger className="w-40">
+                                    <SelectValue placeholder={params?.status ?? 'status'} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="draft">Draft</SelectItem>
+                                    <SelectItem value="pending">Pending</SelectItem>
+                                    <SelectItem value="published">Published</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <Button asChild>
+                                <Link href={route('internal-articles.create')}>
+                                    <IconCirclePlusFill className="mr-2 size-4" />
+                                    New
+                                </Link>
+                            </Button>
+                        </div>
                     </div>
                 </div>
                 <CardContent className="p-0 [&_td]:whitespace-nowrap [&_td]:px-6 [&_th]:px-6 [&_thead]:border-t">
