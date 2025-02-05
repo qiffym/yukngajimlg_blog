@@ -6,8 +6,7 @@ import {
     IconChevronRight,
     IconCirclePlusFill,
     IconDotsVertical,
-    IconPencilBox,
-    IconTrash,
+    IconPencilBox, IconTrash
 } from '@irsyadadl/paranoid';
 import {
     DropdownMenu,
@@ -23,17 +22,16 @@ import { AlertAction } from '@/components/alert-action';
 import { Button } from '@/components/ui/button';
 
 export default function Index(props) {
-    const { data: categories, meta, links } = props.categories;
-
+    const { data: tags, meta, links } = props.tags;
     return (
         <Card>
-            <div className="flex flex-col justify-between gap-y-6 p-6 md:flex-row md:items-center md:gap-y-0">
+            <div className="flex flex-col justify-between gap-y-6 p-6 md:flex-row md:items-center md:space-y-0">
                 <CardHeader className="p-0">
-                    <CardTitle>Categories List</CardTitle>
-                    <CardDescription>{meta.total} categories found on this application.</CardDescription>
+                    <CardTitle>Tags List</CardTitle>
+                    <CardDescription>{meta.total} tags found on this application.</CardDescription>
                 </CardHeader>
                 <Button asChild>
-                    <Link href={route('categories.create')}>
+                    <Link href={route('tags.create')}>
                         <IconCirclePlusFill className="mr-2 size-4" />
                         New
                     </Link>
@@ -46,31 +44,29 @@ export default function Index(props) {
                             <TableHead>#</TableHead>
                             <TableHead>Name</TableHead>
                             <TableHead>Slug</TableHead>
-                            <TableHead>Articles</TableHead>
+                            <TableHead>Article</TableHead>
                             <TableHead />
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {categories.map((category, index) => (
-                            <TableRow key={category.id}>
-                                <TableCell>{meta.from + index}</TableCell>
-                                <TableCell>
-                                    <Link href={route('categories.show', [category])}>{category.name}</Link>
-                                </TableCell>
-                                <TableCell>{category.slug}</TableCell>
-                                <TableCell>{category.articles_count}</TableCell>
+                        {tags.map((tag, i) => (
+                            <TableRow key={tag.id}>
+                                <TableCell>{meta.from + i}</TableCell>
+                                <TableCell>{tag.name}</TableCell>
+                                <TableCell>{tag.slug}</TableCell>
+                                <TableCell>{tag.articles_count}</TableCell>
                                 <TableCell>
                                     <div className="flex justify-end">
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
                                                 <IconDotsVertical className="size-4" />
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end" className="w-48">
-                                                <DropdownMenuLabel>Article ID: {category.id}</DropdownMenuLabel>
-                                                <DropdownMenuSeparator />
+                                            <DropdownMenuContent className="w-48" align="end">
+                                                <DropdownMenuLabel>Tag ID: {tag.id}</DropdownMenuLabel>
+                                                <DropdownMenuSeparator/>
                                                 <DropdownMenuItem>
                                                     <IconPencilBox className="mr-2 size-4" />
-                                                    <Link href={route('categories.edit', [category])}>Edit</Link>
+                                                    <Link href={route('tags.edit', [tag])}>Edit</Link>
                                                 </DropdownMenuItem>
                                                 <DropdownMenuGroup>
                                                     <AlertAction
@@ -81,10 +77,10 @@ export default function Index(props) {
                                                             </DropdownMenuItem>
                                                         }
                                                         variant="destructive"
-                                                        title="Delete Category"
-                                                        description="Are you sure you want to delete this category?"
+                                                        title="Delete Tag"
+                                                        description="Are you sure you want to delete this tag?"
                                                         action={() =>
-                                                            router.delete(route('categories.destroy', [category]), {
+                                                            router.delete(route('tags.destroy', [tag]), {
                                                                 preserveScroll: true,
                                                             })
                                                         }
@@ -101,7 +97,7 @@ export default function Index(props) {
             </CardContent>
             <CardFooter className="justify-between border-t pt-6 text-sm text-muted-foreground">
                 <span>
-                    Showing {meta.from} to {meta.to} of {meta.total} categories.
+                    Showing {meta.from} to {meta.to} of {meta.total} tags.
                 </span>
                 {meta.has_pages && (
                     <div className="flex items-center gap-x-1">
@@ -132,4 +128,4 @@ export default function Index(props) {
     );
 }
 
-Index.layout = (page) => <UserLayout title="Categories List" children={page} />;
+Index.layout = (page) => <UserLayout title="Tags List" children={page} />;

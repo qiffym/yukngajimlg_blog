@@ -8,7 +8,7 @@ import { InputErrorMessage } from '@/components/input-error-message';
 
 export default function Form(props) {
     const { data, setData, post, errors, processing } = useForm({
-        name: props.category?.name ?? '',
+        name: props.tag?.name ?? '',
         _method: props.page_meta.method,
     });
 
@@ -40,7 +40,7 @@ export default function Form(props) {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button disabled={processing}>Save</Button>
+                    <Button type="submit" color="primary" disabled={processing}>Save</Button>
                 </CardFooter>
             </form>
         </Card>
