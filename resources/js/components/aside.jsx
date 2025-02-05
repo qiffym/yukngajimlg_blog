@@ -27,6 +27,9 @@ export function Aside() {
             </AsideLink>
             <AsideLink href="#">Tags</AsideLink>
             <AsideLink href="#">Comments</AsideLink>
+            <AsideLink href={route('categories.index')} active={route().current('categories.*')}>
+                Categories
+            </AsideLink>
         </nav>
     );
 }
